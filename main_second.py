@@ -491,7 +491,6 @@ def run():
             mic_re = speech_module()
             if mic_re != "re":
                 i = False
-                mic_re = "안녕"
                 a, b = process_module(mic_re)
                 if a != "Error":
                     what_to_do(a, b)
