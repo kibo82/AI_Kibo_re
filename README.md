@@ -28,7 +28,7 @@ And you also have to set the path of chromedriver.exe and you chrome browser's u
 
 kor.txt and setting.txt must be in same directory with main_second.py.
 
-This program must be run by administrator mode. (Run your IDE with administrator mode)
+This program must be run with administrator mode. (Run your IDE with administrator mode)
 
 
 
