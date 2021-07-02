@@ -7,4 +7,6 @@ Some of these packages might be installed basically when you install python.
 
 This program must be run by administrator mode. (Run your IDE with administrator mode)
 
-If there is any error with code, or you have any question with this code, 
+If there is any error with code, or you have any question with this code, please notice me in Issues tab.
+
+Thx.
