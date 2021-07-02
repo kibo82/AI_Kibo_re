@@ -1,0 +1,13 @@
+internet_error1:인터넷이 연결되어 있지 않습니다.
+internet_error2:인터넷 연결을 확인 후 엔터 키를 눌러주세요.
+internet_test:이 프로그램은 인터넷 연결을 필요로 합니다. 인터넷이 연결되어 있는지 확인합니다.
+internet_success:인터넷 연결이 확인되었습니다.
+news_notice:구글 뉴스 기준 빈도수가 가장 높은 3개의 키워드에 대한 뉴스를 가져옵니다.
+waiting:잠시만 기다려주세요.
+news_result1:키워드
+news_result2:에 대한 결과입니다.
+mic_start:음성녹음을 시작합니다.
+mic_end:음성녹음이 완료되었습니다.
+mic_error:녹음된 것이 없습니다.
+no_command:지정된 명령어가 없습니다.
+wait_before_ww

@@ -1,0 +1,11 @@
+internet_error1:No internet connection found.
+internet_error2:Please press enter after cheking your internet connection.
+internet_test:This program needs internet connection. Will check internet connection automatically.
+internet_success:Internet connection was successfully tested.
+news_notice:It will bring three kinds of news based on frequency of Google News.(Now only support KR News)
+waiting:Waiting for a second
+news_result1:This is the result of keyword
+news_result2:
+mic_start:Start to record the audio.
+mic_end:Recording is finished.
+mic_error:There is no recording file.
