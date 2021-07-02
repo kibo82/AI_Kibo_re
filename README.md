@@ -18,7 +18,7 @@ This program needs to install following package.
 
   selenium, urlib3, screen_brightness_control, asyncio, winrt, requests, json, decouple, pyaudio, wace, sqlite3, wave, datetime, konlpy, feedparser.
 
-Some of these packages might be installed basically when you install python.
+Some of these packages might be installed already when you install python.
 
 And program also needs kakao stt api key. You can apply and get api keys free here (https://developers.kakao.com/)
 (Also you can get some information in this blog : https://ai-creator.tistory.com/70)
@@ -35,4 +35,4 @@ This program must be run by administrator mode. (Run your IDE with administrator
 
 If there is any error with code, or you have any question with this code, please notice me in Issues tab.
 
-Thx.
+And there is also developing document (developing.hwp)
