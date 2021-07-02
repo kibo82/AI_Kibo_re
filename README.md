@@ -5,7 +5,7 @@ This AI can do following function by STT(Jorean Only)
 3. Write memo in windows sticky memo app
 4. Parsing Google News and arrange
 
-(Emergency Notice!!! There is something fatal error with Bluetooth on off function. So I disabled it. If you want to activate, just uncomment this : line 6, line 21 to 28, line 233.)
+(Emergency Notice!!! There is something fatal error with Bluetooth on off function. So I disabled it. If you want to activate, just uncomment this : line 6, line 21 to 28, line 236.)
 
 And I wil add following function gradually.
 1. Alarm & Timer
@@ -24,7 +24,8 @@ And program also needs kakao stt api key. You can apply and get api keys free he
 (Also you can get some information in this blog : https://ai-creator.tistory.com/70)
 
 You have to download kor.txt(eng.txt), main_second, setting.txt, chromedriver.exe for run this program.
-And you also have to set the path of kor.txt, setting.txt, chromedriver.exe in code.
+And you also have to set the path of chromedriver.exe and you chrome browser's user data directory in code. (line 345, 346)
+kor.txt and setting.txt must be in same directory with main_second.py.
 
 This program must be run by administrator mode. (Run your IDE with administrator mode)
 
