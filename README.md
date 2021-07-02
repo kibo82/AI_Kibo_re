@@ -2,7 +2,7 @@ This program is Beta Version of AI Assistant - For Korean User - Run in Window.
 This AI can do following function by STT(Korean Only)
 1. WIFI/Bluetooth On, Off
 2. Display brightness control
-3. Write memo in windows sticky memo app
+3. Write memo in windows sticky memo app (You have to write one blank memo before use this function)
 4. Parsing Google News and arrange
 
 (Emergency Notice!!! There is something fatal error with Bluetooth on off function. So I disabled it. If you want to activate, just uncomment this : line 6, line 21 to 28, line 236.)
