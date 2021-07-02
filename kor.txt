@@ -10,4 +10,3 @@ mic_start:음성녹음을 시작합니다.
 mic_end:음성녹음이 완료되었습니다.
 mic_error:녹음된 것이 없습니다.
 no_command:지정된 명령어가 없습니다.
-wait_before_ww
