@@ -1,5 +1,5 @@
 This program is Beta Version of AI Assistant - For Korean User - Run in Window.
-This AI can do following function by STT(Jorean Only)
+This AI can do following function by STT(Korean Only)
 1. WIFI/Bluetooth On, Off
 2. Display brightness control
 3. Write memo in windows sticky memo app
