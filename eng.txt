@@ -8,4 +8,5 @@ news_result1:This is the result of keyword
 news_result2:
 mic_start:Start to record the audio.
 mic_end:Recording is finished.
-mic_error:There is no recording file.
+mic_error:There is no recording file. Auto restart recording the audio.
+no_command:There is no command exist.
