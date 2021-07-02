@@ -3,8 +3,13 @@ This AI can do following function by STT(Jorean Only)
 1. WIFI/Bluetooth On, Off
 2. Display brightness control
 3. Write memo in windows sticky memo app
-4. Parsing Google News and arrange.
+4. Parsing Google News and arrange
 
+And I wil add following function gradually.
+1. Alarm & Timer
+2. Run program automatically (ex. Edge, Chrome, and more app..)
+3. Voice trigger
+4. Using thread for multi-processing
 
 
 This program needs to install following package.
