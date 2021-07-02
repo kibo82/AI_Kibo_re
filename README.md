@@ -36,5 +36,3 @@ This program must be run with administrator mode. (Run your IDE with administrat
 
 
 If there is any error with code, or you have any question with this code, please notice me in Issues tab.
-
-And there is also developing document! (developing.hwp)
