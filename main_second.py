@@ -32,7 +32,7 @@ def errornotice():
     """
     지정된 작업이 없을 시 출력
     """
-    print("Error! No Command Set")
+    print(ext(lang, "no_command"))
 
 
 def internet_check():
@@ -112,29 +112,133 @@ def speech_module():
         result = json.loads(result_json_string)
     except ValueError:
         print(ext(lang, "mic_error"))
+        return "re"
     else:
         return result['value']
 
 
-# def on_off_module(what, status):
-#     """
-#
-#     :param what:
-#     :param status:
-#     :return:
-#     """
-#     if status == "on":
-#         st = "True"
-#     elif status == "off":
-#         st = "False"
-#
-#     if what == "bluetooth":
-#         asyncio.run(bluetooth_power(st))
-#     elif what == "wifi":
-#         if st == "True":
-#             os.popen('netsh interface set interface "Wi-Fi" ENABLED')
-#         elif st == "False":
-#             os.popen('netsh interface set interface "Wi-Fi" DISABLED')
+def process_module(mic_re):
+    """
+    음성인식한 값을 처리해서 어떤 작업을 할 지 결정한다.
+    konlpy의 kkma를 이용하여 명사, 숫자, 동사의 어근을 분리하여 리스트에 저장하고,
+    인식되는 명사에 따라
+    :param mic_re: 음성인식 결과
+    :return:
+    """
+    kkma = Kkma()
+    okt = Okt()
+    nngcontainer = []
+    vvcontainer = []
+    nrcontainer = []
+    fact_list = []
+
+    main_txt = kkma.pos(mic_re)
+    for i in range(len(main_txt)):
+        tmp = main_txt[i]
+        if "NNG" in tmp:
+            nngcontainer.append(i)
+        elif "VV" in tmp:
+            vvcontainer.append(i)
+        elif "NR" in tmp:
+            nrcontainer.append(i)
+
+    for i in range(len(nngcontainer)):
+        tmpcnt = nngcontainer[i]
+        tmp = main_txt[tmpcnt][0]
+        if tmp == "밝기":
+            pr_re = "brightness"
+            for j in range(len(vvcontainer)):
+                vvtmp = main_txt[vvcontainer[j]][0]
+                if vvtmp == "낮추":
+                    fact_list.append("down")
+                    fact_list.append("0")
+                elif vvtmp == "높이":
+                    fact_list.append("up")
+                    fact_list.append("0")
+                elif vvtmp == "하" or vvtmp == "맞추":
+                    fact_list.append("still")
+                    for k in range(len(nrcontainer)):
+                        nrtmp = main_txt[nrcontainer[k]][0]
+                        fact_list.append(nrtmp)
+
+        elif tmp == "메모":
+            pr_re = "memo"
+            tmparr = []
+            tmptxt = mic_re.split()
+            print(tmptxt)
+            cnt = 0
+            except_txt = kkma.pos(tmptxt[len(tmptxt) - 2])
+            print(except_txt)
+
+            if except_txt[len(except_txt) - 1][0] == '라고' and cnt == 0:
+                for j in range(0, len(tmptxt) - 2):
+                    tmparr.append(tmptxt[j])
+                tmpstring = tmptxt[len(tmptxt) - 2]
+                tmpstring = tmpstring[0:len(tmpstring) - 2]
+                tmparr.append(tmpstring)
+                string = " ".join(tmparr)
+                fact_list.append(string)
+                fact_list.append(True)
+                cnt = 1
+
+            elif cnt == 0:
+                for j in range(0, len(tmptxt) - 2):
+                    tmparr.append(tmptxt[j])
+                string = " ".join(tmparr)
+                fact_list.append(string)
+                fact_list.append(True)
+                cnt = 1
+
+        elif tmp == "검색":
+            cnt = 0
+            pr_re = "internet_search"
+            tmparr = []
+            tmptxt = mic_re.split()
+            firsttxt = okt.pos(tmptxt[0])
+            print(firsttxt)
+            if cnt == 0 and len(firsttxt) == 2 and firsttxt[1][0] == '에서' and firsttxt[1][1] == 'Josa':
+                for j in range(1, len(tmptxt) - 1):
+                    tmparr.append(tmptxt[j])
+                string = " ".join(tmparr)
+                fact_list.append(firsttxt[0][0])
+                fact_list.append(string)
+                cnt = 1
+            elif cnt == 0:
+                for j in range(0, len(tmptxt) - 1):
+                    tmparr.append(tmptxt[j])
+                string = " ".join(tmparr)
+                fact_list.append("네이버")
+                fact_list.append(string)
+                cnt = 1
+
+        elif tmp == "뉴스":
+            pr_re = "news_parcing"
+
+        else:
+            pr_re = "Error"
+
+    return pr_re, fact_list
+
+
+def on_off_module(what, status):
+    """
+    WIFI, Bluetooh on off 기능.
+    :param what:Wifi인지 Bluetooth 인지
+    :param status:On, Off 여부
+    :return:
+    """
+    if status == "on":
+        st = "True"
+    elif status == "off":
+        st = "False"
+
+    if what == "bluetooth":
+        pass  # asyncio.run(bluetooth_power(st))
+    elif what == "wifi":
+        if st == "True":
+            os.popen('netsh interface set interface "Wi-Fi" ENABLED')
+        elif st == "False":
+            os.popen('netsh interface set interface "Wi-Fi" DISABLED')
 
 
 def brightness_module(status, degree):
@@ -182,7 +286,7 @@ def memo_module(user_text, date_indicate):
     tar_text = data[data_len - 1][0]
     text_for_edit = tar_text[0:41]
     # 텍스트를 날짜와 함께 수정한다.
-    if date_indicate == True:
+    if date_indicate:
         now = datetime.now()
         current_time = " - " + str(now.year) + "/" + str(now.month) + "/" + str(now.day) + " " + str(
             now.hour) + ":" + str(now.minute)
@@ -246,6 +350,11 @@ def search_module(pr_re, tar_search):
 
 
 def news_module():
+    """
+    구글 뉴스 파싱 기능.
+    최신 구글 뉴스를 가져와 제목들의 단어의 빈도수를 분석하고 높은 빈도수의 단어가 있는 기사를 추출한다.
+    :return:
+    """
     print(ext(lang, "news_notice"))
     print(ext(lang, "waiting"))
     print(" ")
@@ -319,7 +428,7 @@ def what_to_do(pr_re, arg_list):
     :return: 지정된 작업이 없을 시 리턴해 종료시킴
     """
     if pr_re == "on_off":
-        # on_off_module(arg_list[0], arg_list[1])
+        on_off_module(arg_list[0], arg_list[1])
         pass
     elif pr_re == "brightness":
         brightness_module(arg_list[0], arg_list[1])
@@ -333,12 +442,20 @@ def what_to_do(pr_re, arg_list):
         program_module(arg_list[0])
     elif pr_re == "internet_search":
         search_module(arg_list[0], arg_list[1])
+    elif pr_re == "news_parcing":
+        news_module()
     else:
         errornotice()
         return
 
 
 def ext(what, tar_txt):
+    """
+    txt파일에서 불러와야 되는 텍스트 추출
+    :param what:설정 or 언어 결정
+    :param tar_txt: 가져올 텍스트 이름
+    :return:
+    """
     if what == set:
         textfile = 'setting.txt'
     else:
@@ -352,99 +469,12 @@ def ext(what, tar_txt):
             return tmp[1]
 
 
-def process_module(mic_re):
-    kkma = Kkma()
-    okt = Okt()
-    nngcontainer = []
-    vvcontainer = []
-    nrcontainer = []
-    fact_list = []
-
-    main_txt = kkma.pos(mic_re)
-    for i in range(len(main_txt)):
-        tmp = main_txt[i]
-        if "NNG" in tmp:
-            nngcontainer.append(i)
-        elif "VV" in tmp:
-            vvcontainer.append(i)
-        elif "NR" in tmp:
-            nrcontainer.append(i)
-
-    print(main_txt)
-
-    for i in range(len(nngcontainer)):
-        tmpcnt = nngcontainer[i]
-        tmp = main_txt[tmpcnt][0]
-        if tmp == "밝기":
-            pr_re = "brightness"
-            for j in range(len(vvcontainer)):
-                vvtmp = main_txt[vvcontainer[j]][0]
-                if vvtmp == "낮추":
-                    fact_list.append("down")
-                    fact_list.append("0")
-                elif vvtmp == "높이":
-                    fact_list.append("up")
-                    fact_list.append("0")
-                elif vvtmp == "하" or vvtmp == "맞추":
-                    fact_list.append("still")
-                    for k in range(len(nrcontainer)):
-                        nrtmp = main_txt[nrcontainer[k]][0]
-                        fact_list.append(nrtmp)
-
-        elif tmp == "메모":
-            pr_re = "memo"
-            tmparr = []
-            tmptxt = mic_re.split()
-            print(tmptxt)
-            cnt=0
-            except_txt = kkma.pos(tmptxt[len(tmptxt) - 2])
-            print(except_txt)
-
-
-            if except_txt[len(except_txt)-1][0] == '라고' and cnt==0:
-                for j in range(0, len(tmptxt) - 2):
-                    tmparr.append(tmptxt[j])
-                tmpstring = tmptxt[len(tmptxt) - 2]
-                tmpstring = tmpstring[0:len(tmpstring) - 2]
-                tmparr.append(tmpstring)
-                string = " ".join(tmparr)
-                fact_list.append(string)
-                fact_list.append(True)
-                cnt=1
-
-            elif cnt==0:
-                for j in range(0, len(tmptxt) - 2):
-                    tmparr.append(tmptxt[j])
-                string = " ".join(tmparr)
-                fact_list.append(string)
-                fact_list.append(True)
-                cnt=1
-
-        elif tmp == "검색":
-            pr_re = "internet_search"
-            tmparr = []
-            tmptxt = mic_re.split()
-            firsttxt = okt.pos(tmptxt[0])
-            print(firsttxt)
-            if len(firsttxt) == 2 and firsttxt[1][0] == '에서' and firsttxt[1][1] == 'Josa':
-                    fact_list.append(firsttxt[0][0])
-                    for j in range(1, len(tmptxt) - 1):
-                        tmparr.append(tmptxt[j])
-                    string = " ".join(tmparr)
-                    fact_list.append(firsttxt[0][0])
-                    fact_list.append(string)
-            else:
-                for j in range(0, len(tmptxt) - 1):
-                    tmparr.append(tmptxt[j])
-                string = " ".join(tmparr)
-                fact_list.append("네이버")
-                fact_list.append(string)
-    print(fact_list)
-    return pr_re, fact_list
-
-
 def run():
-    fact_list = []
+    """
+    전체 실행 +인터넷 연결 확인 코드
+    인터넷이 연결되어 있지 않으면 인터넷 연결을 지속적으로 확인시킨다.
+    :return:
+    """
     print(ext(lang, "internet_test"))
     internet_test = internet_check()
     if not internet_test:
@@ -455,12 +485,21 @@ def run():
     else:
         print(ext(lang, "internet_success"))
         print()
+        i = True
+        while (i):
+            mic_module(int(ext(set, "micsecond")))
+            mic_re = speech_module()
+            if mic_re != "re":
+                i = False
+                mic_re = "안녕"
+                a, b = process_module(mic_re)
+                if a != "Error":
+                    what_to_do(a, b)
+                    time.sleep(10)
+                else:
+                    errornotice()
 
-        mic_module(int(ext(set, "micsecond")))
-        mic_re=speech_module()
-        a, b = process_module(mic_re)
-        what_to_do(a, b)
 
-
+# 언어설정 : kor과 eng 가능.
 lang = "kor"
 run()
