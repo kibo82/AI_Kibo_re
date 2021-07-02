@@ -5,7 +5,7 @@ This AI can do following function by STT(Jorean Only)
 3. Write memo in windows sticky memo app
 4. Parsing Google News and arrange
 
-(Emergency Notice!!! There is something fatal error with WIFI/Bluetooth on off module. So I disabled it. If you want to activate, just uncomment this : line 6, line 21 to 28, line 233.)
+(Emergency Notice!!! There is something fatal error with Bluetooth on off function. So I disabled it. If you want to activate, just uncomment this : line 6, line 21 to 28, line 233.)
 
 And I wil add following function gradually.
 1. Alarm & Timer
