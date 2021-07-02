@@ -35,4 +35,4 @@ This program must be run by administrator mode. (Run your IDE with administrator
 
 If there is any error with code, or you have any question with this code, please notice me in Issues tab.
 
-And there is also developing document (developing.hwp)
+And there is also developing document! (developing.hwp)
