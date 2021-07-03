@@ -23,7 +23,7 @@ This program needs to install following package.
 Some of these packages might be installed already when you install python.
 
 And program also needs kakao stt api key. You can apply and get api keys free here (https://developers.kakao.com/)
-Then make .env file and paste your api key.
+Then make .env file and paste your api key. (ex. SECRET_KEY=......)
 (Also you can get some information in this blog : https://ai-creator.tistory.com/70)
 
 You have to download kor.txt(eng.txt), main_second, setting.txt, chromedriver.exe for run this program.
