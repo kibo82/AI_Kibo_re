@@ -26,7 +26,7 @@ And program also needs kakao stt api key. You can apply and get api keys free he
 (Also you can get some information in this blog : https://ai-creator.tistory.com/70)
 
 You have to download kor.txt(eng.txt), main_second, setting.txt, chromedriver.exe for run this program.
-And you also have to set the path of chromedriver.exe and you chrome browser's user data directory in code. (line 345, 346)
+And you also have to set the path of wav output for STT, chromedriver.exe and your chrome browser's user data directory in code. (line 104, 345, 346)
 
 kor.txt and setting.txt must be in same directory with main_second.py.
 
