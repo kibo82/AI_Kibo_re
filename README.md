@@ -22,8 +22,8 @@ This program needs to install following package.
 
 Some of these packages might be installed already when you install python.
 
-I changed some option of konlpy, so you have to download open-korean-text-2.1.0 jar and paste to directiry that konlpy package installed.
-(It will be in your venv - Lib - site-packages - konlpy - java)
+I changed some option of konlpy, so you have to download open-korean-text-2.1.0 jar and paste to directory that konlpy package installed.
+(It will be in your venv - Lib - site-packages - konlpy - java folder)
 
 And program also needs kakao stt api key. You can apply and get api keys free here (https://developers.kakao.com/)
 Then make .env file and paste your api key. (ex. SECRET_KEY=......)
